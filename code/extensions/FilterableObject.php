@@ -12,14 +12,5 @@ class FilterableObject extends DataExtension {
         "Filters" => "FilterOption"
     );
 
-    function updateCMSFields(FieldList $fields) {
-        $gridfield = $fields->dataFieldByName("Filters");
-
-        if($gridfield) {
-            $gridfield
-                ->getConfig()
-                ->getComponentsByType("GridFieldAddExistingAutocompleter")
-                ->first();
-        }
-    }
+    function updateCMSFields(FieldList $fields) {}
 }
