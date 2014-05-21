@@ -1,0 +1,7 @@
+---
+Name: filterable
+After: 'framework/*','cms/*'
+---
+LeftAndMain:
+  extensions:
+    - FilterableLeftAndMain

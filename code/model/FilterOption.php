@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Filter that can be added to an object
+ *
+ * @author i-lateral (http://www.i-lateral.com)
+ * @package Filterable
+ */
+class FilterOption extends DataObject {
+
+    private static $db = array(
+        'Title'         => 'Varchar',
+        'Sort'          => 'Int'
+    );
+
+    private static $has_one = array(
+        "Parent" => "FilterGroup"
+    );
+
+    private static $summary_fields = array(
+        'Title'         => 'Title'
+    );
+
+    private static $default_sort = "\"Sort\" DESC";
+
+    public function canView($member = false) {
+        return $this->Parent()->canView($member);
+    }
+
+    public function canCreate($member = false) {
+        return $this->Parent()->canCreate($member);
+    }
+
+    public function canEdit($member = false) {
+        return $this->Parent()->canEdit($member);
+    }
+
+    public function canDelete($member = false) {
+        return $this->Parent()->canDelete($member);
+    }
+
+}
