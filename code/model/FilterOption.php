@@ -24,10 +24,20 @@ class FilterOption extends DataObject {
 
     private static $summary_fields = array(
         'Title'         => 'Title',
-        'Parent.Title'  => 'Filter'
+        'ParentFilter'  => 'Filter'
     );
 
     private static $default_sort = "\"Sort\" DESC";
+
+
+    /**
+     * return the title of the parent filter
+     *
+     * @return string
+     */
+    public function getParentFilter() {
+        return $this->Parent()->Title;
+    }
 
     public function canView($member = false) {
         return $this->Parent()->canView($member);
