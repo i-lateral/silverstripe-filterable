@@ -17,8 +17,14 @@ class FilterOption extends DataObject {
         "Parent" => "FilterGroup"
     );
 
+    private static $searchable_fields = array(
+      'Title'       => array('title' => 'Title'),
+      'Parent.Title'=> array('title' => 'Filter')
+    );
+
     private static $summary_fields = array(
-        'Title'         => 'Title'
+        'Title'         => 'Title',
+        'Parent.Title'  => 'Filter'
     );
 
     private static $default_sort = "\"Sort\" DESC";
