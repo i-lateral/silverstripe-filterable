@@ -15,6 +15,19 @@
 class Filterable extends Object {
 
     /**
+     * List of class names that have beern made filterable. This can
+     * be usefull if you need to find out a list of what objects are
+     * available for filtering.
+     *
+     * @var array
+     */
+    private static $filtered_classes = array();
+
+    public static function getFilteredClasses() {
+        return self::$filtered_classes;
+    }
+
+    /**
      * Adds filterable to a {@link DataObject}.
      *
      * @param string classname to add filters to
@@ -25,6 +38,9 @@ class Filterable extends Object {
         $belongs = (is_array(FilterOption::config()->belongs_many_many)) ? FilterOption::config()->belongs_many_many : array();
         $belongs[$relation] = $class;
         FilterOption::config()->belongs_many_many = $belongs;
+
+        // Add classname to list of filtered classes
+        self::$filtered_classes[] = $class;
 
         $class::add_extension('FilterableObject');
     }
@@ -40,9 +56,13 @@ class Filterable extends Object {
         // Update the many many relations on
         $belongs = (is_array(FilterOption::config()->belongs_many_many)) ? FilterOption::config()->belongs_many_many : array();
 
-        if(isset(self::$belongs["Filters"])) {
-            unset(self::$belongs["Filters"]);
-        }
+        // Remove our relation
+        if(isset($belongs["Filters"]))
+            unset($belongs["Filters"]);
+
+        // Now remove the class from our list of classes
+        if(isset(self::$filtered_classes[$class]))
+            unset(self::$filtered_classes[$class]);
 
         FilterOption::config()->belongs_many_many = $belongs;
 

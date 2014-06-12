@@ -5,3 +5,6 @@ After: 'framework/*','cms/*'
 LeftAndMain:
   extensions:
     - FilterableLeftAndMain
+Controller:
+  extensions:
+    - FilterableController
