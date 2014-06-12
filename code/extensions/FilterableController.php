@@ -59,6 +59,8 @@ class FilterableController extends Extension {
             }
         }
 
+        $results = new PaginatedList($results, $this->owner->request);
+
         $data = array(
             'Results' => $results
         );
