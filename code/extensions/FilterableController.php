@@ -20,6 +20,16 @@ class FilterableController extends Extension {
         "filterby"
     );
 
+    public function FilterMenu() {
+        $vars = array(
+            "FilterGroups" => FilterGroup::get()
+        );
+
+        return $this
+            ->owner
+            ->renderWith("FilterMenu", $vars);
+    }
+
     public function filterby() {
         // Get a list of filterable classes
         $classes = Filterable::getFilteredClasses();
@@ -70,13 +80,15 @@ class FilterableController extends Extension {
 
         $this->owner->extend("updateFilterBy", $data);
 
+        $template = ($this->owner->ClassName) ? $this->owner->ClassName : "Page";
+
         return $this
             ->owner
             ->customise($data)
             ->renderWith(array(
-                'Page_filterby',
-                'FilterBy',
-                'Page'
+                "{$template}_filterby",
+                "FilterBy",
+                "Page"
             ));
     }
 }

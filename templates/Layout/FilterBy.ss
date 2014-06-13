@@ -1,4 +1,8 @@
-<div id="Content" class="searchResults">
+<aside class="sidebar unit size1of4 unit-25">
+    $FilterMenu
+</aside>
+
+<div id="Content" class="content-container unit size3of4 lastUnit unit-75">
     <h1><% _t("Filterable.Results","Results") %></h1>
 
     <% if $Query %>

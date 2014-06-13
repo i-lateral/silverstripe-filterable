@@ -31,6 +31,19 @@ class FilterOption extends DataObject {
 
     private static $default_sort = "\"Sort\" DESC";
 
+    /**
+     * Get a filter link for the current option, assuming the current
+     * controller has the filterby action available
+     *
+     * @return string
+     */
+    public function Link() {
+        $controller = Controller::curr();
+
+        $link = $controller->Link("filterby");
+
+        return $link . "?filter={$this->Parent()->URLSegment}:{$this->URLSegment}";
+    }
 
     /**
      * return the title of the parent filter
