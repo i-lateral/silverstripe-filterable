@@ -28,8 +28,11 @@ class FilterableController extends Extension {
         $filter_ids = array();
 
         if(isset($get_vars["filter"])) {
-            // First explode the filters stored in our filter var
-            $filter_vars = explode(";", $get_vars["filter"]);
+            // First trim uneeded characters from string
+            $filter_vars = trim($get_vars["filter"]," :;\t\n\r\0\x0B");
+
+            // Now explode the filters stored in our filter var
+            $filter_vars = explode(";", $filter_vars);
 
             // Now get the filter options we need to filter objects by
             foreach($filter_vars as $single_var) {
@@ -37,8 +40,8 @@ class FilterableController extends Extension {
 
                 $filter_option = FilterOption::get()
                     ->filter(array(
-                        "Parent.Title:nocase" => $key_value[0],
-                        "Title:nocase" => $key_value[1]
+                        "Parent.URLSegment:nocase" => $key_value[0],
+                        "URLSegment:nocase" => $key_value[1]
                     ))->first();
 
                 if($filter_option && $results->exists()) {

@@ -12,7 +12,7 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class Filterable extends Object {
+class Filterable extends Object implements PermissionProvider {
 
     /**
      * List of class names that have beern made filterable. This can
@@ -67,6 +67,33 @@ class Filterable extends Object {
         FilterOption::config()->belongs_many_many = $belongs;
 
         $class::remove_extension('FilterableObject');
+    }
+
+    /**
+     * Add permissions to allow editing and deleting of filters
+     *
+     */
+    public function providePermissions() {
+        return array(
+            "FILTERABLE_ADD" => array(
+                'name' => 'Add filters',
+                'help' => 'Allow adding of custom filters',
+                'category' => 'Filterable',
+                'sort' => 100
+            ),
+            "FILTERABLE_EDIT" => array(
+                'name' => 'Edit filters',
+                'help' => 'Allow editing of custom filters',
+                'category' => 'Filterable',
+                'sort' => 100
+            ),
+            "FILTERABLE_DELETE" => array(
+                'name' => 'Delete filters',
+                'help' => 'Allow deleting of custom filters',
+                'category' => 'Filterable',
+                'sort' => 100
+            )
+        );
     }
 
 }

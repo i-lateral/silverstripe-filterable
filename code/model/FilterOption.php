@@ -9,8 +9,9 @@
 class FilterOption extends DataObject {
 
     private static $db = array(
-        'Title'         => 'Varchar',
-        'Sort'          => 'Int'
+        "Title"         => "Varchar",
+        "URLSegment"    => "Varchar",
+        "Sort"          => "Int"
     );
 
     private static $has_one = array(
@@ -18,13 +19,14 @@ class FilterOption extends DataObject {
     );
 
     private static $searchable_fields = array(
-      'Title'       => array('title' => 'Title'),
-      'Parent.Title'=> array('title' => 'Filter')
+      "Title"       => array("title" => "Title"),
+      "Parent.Title"=> array("title" => "Filter")
     );
 
     private static $summary_fields = array(
-        'Title'         => 'Title',
-        'ParentFilter'  => 'Filter'
+        "Title"         => "Title",
+        "URLSegment"    => "URL Segment",
+        "ParentFilter"  => "Filter"
     );
 
     private static $default_sort = "\"Sort\" DESC";
@@ -37,6 +39,19 @@ class FilterOption extends DataObject {
      */
     public function getParentFilter() {
         return $this->Parent()->Title;
+    }
+
+    public function onBeforeWrite() {
+        parent::onBeforeWrite();
+
+        // Set our URL segment
+        if(!$this->URLSegment) {
+            $url = Convert::raw2url($this->Title);
+            $url = str_replace(":","",$url);
+            $url = str_replace(";","",$url);
+            $this->URLSegment = $url;
+        }
+
     }
 
     public function canView($member = false) {

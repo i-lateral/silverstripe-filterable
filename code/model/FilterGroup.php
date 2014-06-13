@@ -8,8 +8,9 @@
  */
 class FilterGroup extends DataObject {
     private static $db = array(
-        'Title'         => 'Varchar',
-        'Sort'          => 'Int'
+        "Title"         => "Varchar",
+        "URLSegment"    => "Varchar",
+        "Sort"          => "Int"
     );
 
     private static $has_many = array(
@@ -17,8 +18,8 @@ class FilterGroup extends DataObject {
     );
 
     private static $summary_fields = array(
-        'Title'         => 'Title',
-        'Options.count' => '#Options'
+        "Title"         => "Title",
+        "Options.count" => "#Options"
     );
 
     private static $default_sort = "\"Sort\" DESC";
@@ -49,6 +50,7 @@ class FilterGroup extends DataObject {
 
         // Add fields to the CMS
         $fields->addFieldToTab('Root.Main', TextField::create('Title'));
+        $fields->addFieldToTab('Root.Main', TextField::create('URLSegment'));
         $fields->addFieldToTab("Root.Main", HeaderField::create("OptionsHeader", "Options available to this filter"));
         $fields->addFieldToTab('Root.Main', $options_field);
 
@@ -65,19 +67,47 @@ class FilterGroup extends DataObject {
         }
     }
 
+    public function onBeforeWrite() {
+        parent::onBeforeWrite();
+
+        // Set our URL segment
+        if(!$this->URLSegment) {
+            $url = Convert::raw2url($this->Title);
+            $url = str_replace(":","",$url);
+            $url = str_replace(";","",$url);
+            $this->URLSegment = $url;
+        }
+
+    }
+
     public function canView($member = false) {
         return true;
     }
 
     public function canCreate($member = false) {
-        return true;
+        if(!$member) $member = Member::currentUser();
+
+        if($member && Permission::checkMember($member,"FILTERABLE_ADD"))
+            return true;
+        else
+            return false;
     }
 
     public function canEdit($member = false) {
-        return true;
+        if(!$member) $member = Member::currentUser();
+
+        if($member && Permission::checkMember($member,"FILTERABLE_EDIT"))
+            return true;
+        else
+            return false;
     }
 
     public function canDelete($member = false) {
-        return true;
+        if(!$member) $member = Member::currentUser();
+
+        if($member && Permission::checkMember($member,"FILTERABLE_DELETE"))
+            return true;
+        else
+            return false;
     }
 }
