@@ -83,8 +83,8 @@ relations you stipulate via *Filterable::add()*.
 These results are rendered into a template, you can overwrite this
 template in several ways.
 
-1. Create a template called *YourClassName_filterby.ss* in your includes
+1. Create a template called *YourClassName_filterby.ss* in your Layout
 This will allow you to create several different styled filters,
 depending on the controller.
 
-2. Create a template called *FilterBy.ss* in your includes directory.
+2. Create a template called *FilterBy.ss* in your Layout directory.
