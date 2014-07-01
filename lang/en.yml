@@ -1,0 +1,13 @@
+en:
+  FilterGroup:
+    PLURALNAME: 'Filter Groups'
+    SINGULARNAME: 'Filter Group'
+  FilterOption:
+    PLURALNAME: 'Filter Options'
+    SINGULARNAME: 'Filter Option'
+  Filterable:
+    AddFilter: 'Add Filter'
+    AddOption: 'Add Option'
+    Results: Results
+  FilterAdmin:
+    MENUTITLE: Filters

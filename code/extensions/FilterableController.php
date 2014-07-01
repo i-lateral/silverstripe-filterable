@@ -70,6 +70,13 @@ class FilterableController extends Extension {
                     }
                 }
             }
+        } else {
+            foreach($classes as $class) {
+                $list = $class::get();
+
+                if($list->exists())
+                    $results->merge($list);
+            }
         }
 
         $results = new PaginatedList($results, $this->owner->request);
