@@ -16,7 +16,7 @@
     },
     "require": {
         "silverstripe/framework": ">=3.1",
-        "ajshort/silverstripe-gridfieldextensions": "dev-master"
+        "silverstripe-australia/gridfieldextensions": "*"
     },
     "suggest": {
         "silverstripe/cms": "Add full content management support to your site"
