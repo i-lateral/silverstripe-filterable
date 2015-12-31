@@ -12,7 +12,8 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class Filterable extends Object implements PermissionProvider {
+class Filterable extends Object implements PermissionProvider
+{
 
     /**
      * List of class names that have beern made filterable. This can
@@ -23,7 +24,8 @@ class Filterable extends Object implements PermissionProvider {
      */
     private static $filtered_classes = array();
 
-    public static function getFilteredClasses() {
+    public static function getFilteredClasses()
+    {
         return self::$filtered_classes;
     }
 
@@ -33,7 +35,8 @@ class Filterable extends Object implements PermissionProvider {
      * @param string classname to add filters to
      * @param string relation to add to FilterOption object
      */
-    public static function add($class, $relation) {
+    public static function add($class, $relation)
+    {
         // Update the many many relations on
         $belongs = (is_array(FilterOption::config()->belongs_many_many)) ? FilterOption::config()->belongs_many_many : array();
         $belongs[$relation] = $class;
@@ -52,17 +55,20 @@ class Filterable extends Object implements PermissionProvider {
      * @param string classname to remove filters from
      * @param string relation to be removed from FilterOption object
      */
-    public static function remove($class, $relation) {
+    public static function remove($class, $relation)
+    {
         // Update the many many relations on
         $belongs = (is_array(FilterOption::config()->belongs_many_many)) ? FilterOption::config()->belongs_many_many : array();
 
         // Remove our relation
-        if(isset($belongs["Filters"]))
+        if (isset($belongs["Filters"])) {
             unset($belongs["Filters"]);
+        }
 
         // Now remove the class from our list of classes
-        if(isset(self::$filtered_classes[$class]))
+        if (isset(self::$filtered_classes[$class])) {
             unset(self::$filtered_classes[$class]);
+        }
 
         FilterOption::config()->belongs_many_many = $belongs;
 
@@ -73,7 +79,8 @@ class Filterable extends Object implements PermissionProvider {
      * Add permissions to allow editing and deleting of filters
      *
      */
-    public function providePermissions() {
+    public function providePermissions()
+    {
         return array(
             "FILTERABLE_ADD" => array(
                 'name' => 'Add filters',
@@ -95,5 +102,4 @@ class Filterable extends Object implements PermissionProvider {
             )
         );
     }
-
 }

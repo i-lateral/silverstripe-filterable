@@ -6,11 +6,14 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class FilterableObject extends DataExtension {
+class FilterableObject extends DataExtension
+{
 
-    static $many_many = array(
+    public static $many_many = array(
         "Filters" => "FilterOption"
     );
 
-    function updateCMSFields(FieldList $fields) {}
+    public function updateCMSFields(FieldList $fields)
+    {
+    }
 }
