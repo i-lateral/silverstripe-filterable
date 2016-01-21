@@ -6,7 +6,8 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class FilterGroup extends DataObject {
+class FilterGroup extends DataObject
+{
     private static $db = array(
         "Title"         => "Varchar",
         "URLSegment"    => "Varchar",
@@ -24,7 +25,8 @@ class FilterGroup extends DataObject {
 
     private static $default_sort = "\"Sort\" DESC";
 
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
 
         $fields->removeByName('Sort');
@@ -32,7 +34,7 @@ class FilterGroup extends DataObject {
 
         // Deal with product features
         $add_button = new GridFieldAddNewInlineButton('toolbar-header-left');
-        $add_button->setTitle(_t("Filterable.AddOption","Add Option"));
+        $add_button->setTitle(_t("Filterable.AddOption", "Add Option"));
 
         $options_field = new GridField(
             'Options',
@@ -59,55 +61,69 @@ class FilterGroup extends DataObject {
         return $fields;
     }
 
-    public function onBeforeDelete() {
+    public function onBeforeDelete()
+    {
         parent::onBeforeDelete();
 
-        foreach($this->Options() as $option) {
+        foreach ($this->Options() as $option) {
             $option->delete();
         }
     }
 
-    public function onBeforeWrite() {
+    public function onBeforeWrite()
+    {
         parent::onBeforeWrite();
 
         // Set our URL segment
-        if(!$this->URLSegment) {
+        if (!$this->URLSegment) {
             $url = Convert::raw2url($this->Title);
-            $url = str_replace(":","",$url);
-            $url = str_replace(";","",$url);
+            $url = str_replace(":", "", $url);
+            $url = str_replace(";", "", $url);
             $this->URLSegment = $url;
         }
-
     }
 
-    public function canView($member = false) {
+    public function canView($member = false)
+    {
         return true;
     }
 
-    public function canCreate($member = false) {
-        if(!$member) $member = Member::currentUser();
+    public function canCreate($member = false)
+    {
+        if (!$member) {
+            $member = Member::currentUser();
+        }
 
-        if($member && Permission::checkMember($member,"FILTERABLE_ADD"))
+        if ($member && Permission::checkMember($member, "FILTERABLE_ADD")) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
-    public function canEdit($member = false) {
-        if(!$member) $member = Member::currentUser();
+    public function canEdit($member = false)
+    {
+        if (!$member) {
+            $member = Member::currentUser();
+        }
 
-        if($member && Permission::checkMember($member,"FILTERABLE_EDIT"))
+        if ($member && Permission::checkMember($member, "FILTERABLE_EDIT")) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
-    public function canDelete($member = false) {
-        if(!$member) $member = Member::currentUser();
+    public function canDelete($member = false)
+    {
+        if (!$member) {
+            $member = Member::currentUser();
+        }
 
-        if($member && Permission::checkMember($member,"FILTERABLE_DELETE"))
+        if ($member && Permission::checkMember($member, "FILTERABLE_DELETE")) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 }

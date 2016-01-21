@@ -6,7 +6,8 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class FilterOption extends DataObject {
+class FilterOption extends DataObject
+{
 
     private static $db = array(
         "Title"         => "Varchar",
@@ -37,7 +38,8 @@ class FilterOption extends DataObject {
      *
      * @return string
      */
-    public function Link() {
+    public function Link()
+    {
         $controller = Controller::curr();
 
         $link = $controller->Link("filterby");
@@ -50,37 +52,41 @@ class FilterOption extends DataObject {
      *
      * @return string
      */
-    public function getParentFilter() {
+    public function getParentFilter()
+    {
         return $this->Parent()->Title;
     }
 
-    public function onBeforeWrite() {
+    public function onBeforeWrite()
+    {
         parent::onBeforeWrite();
 
         // Set our URL segment
-        if(!$this->URLSegment) {
+        if (!$this->URLSegment) {
             $url = Convert::raw2url($this->Title);
-            $url = str_replace(":","",$url);
-            $url = str_replace(";","",$url);
+            $url = str_replace(":", "", $url);
+            $url = str_replace(";", "", $url);
             $this->URLSegment = $url;
         }
-
     }
 
-    public function canView($member = false) {
+    public function canView($member = false)
+    {
         return $this->Parent()->canView($member);
     }
 
-    public function canCreate($member = false) {
+    public function canCreate($member = false)
+    {
         return $this->Parent()->canCreate($member);
     }
 
-    public function canEdit($member = false) {
+    public function canEdit($member = false)
+    {
         return $this->Parent()->canEdit($member);
     }
 
-    public function canDelete($member = false) {
+    public function canDelete($member = false)
+    {
         return $this->Parent()->canDelete($member);
     }
-
 }

@@ -14,13 +14,15 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class FilterableController extends Extension {
+class FilterableController extends Extension
+{
 
     private static $allowed_actions = array(
         "filterby"
     );
 
-    public function FilterMenu() {
+    public function FilterMenu()
+    {
         $vars = array(
             "FilterGroups" => FilterGroup::get()
         );
@@ -30,22 +32,23 @@ class FilterableController extends Extension {
             ->renderWith("FilterMenu", $vars);
     }
 
-    public function filterby() {
+    public function filterby()
+    {
         // Get a list of filterable classes
         $classes = Filterable::getFilteredClasses();
         $results = ArrayList::create();
         $get_vars = $this->owner->request->getVars();
         $filter_ids = array();
 
-        if(isset($get_vars["filter"])) {
+        if (isset($get_vars["filter"])) {
             // First trim uneeded characters from string
-            $filter_vars = trim($get_vars["filter"]," :;\t\n\r\0\x0B");
+            $filter_vars = trim($get_vars["filter"], " :;\t\n\r\0\x0B");
 
             // Now explode the filters stored in our filter var
             $filter_vars = explode(";", $filter_vars);
 
             // Now get the filter options we need to filter objects by
-            foreach($filter_vars as $single_var) {
+            foreach ($filter_vars as $single_var) {
                 $key_value = explode(":", $single_var);
 
                 $filter_option = FilterOption::get()
@@ -54,28 +57,30 @@ class FilterableController extends Extension {
                         "URLSegment:nocase" => $key_value[1]
                     ))->first();
 
-                if($filter_option && $results->exists()) {
-                    foreach($results as $result) {
-                        if(!$result->Filters()->find("ID",$filter_option->ID)) {
+                if ($filter_option && $results->exists()) {
+                    foreach ($results as $result) {
+                        if (!$result->Filters()->find("ID", $filter_option->ID)) {
                             $results->remove($result);
                         }
                     }
-                } elseif($filter_option) {
-                    foreach($classes as $class) {
+                } elseif ($filter_option) {
+                    foreach ($classes as $class) {
                         $list = $class::get()
-                            ->filter("Filters.ID:ExactMatch",$filter_option->ID);
+                            ->filter("Filters.ID:ExactMatch", $filter_option->ID);
 
-                        if($list->exists())
+                        if ($list->exists()) {
                             $results->merge($list);
+                        }
                     }
                 }
             }
         } else {
-            foreach($classes as $class) {
+            foreach ($classes as $class) {
                 $list = $class::get();
 
-                if($list->exists())
+                if ($list->exists()) {
                     $results->merge($list);
+                }
             }
         }
 
