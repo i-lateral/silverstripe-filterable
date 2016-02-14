@@ -1,9 +1,13 @@
 {
-  "name": "i-lateral/silverstripe-filterable",
-  "description": "Silverstripe module allowing creation of custom filters through the admin interface and then assigning to an object.",
+    "name": "i-lateral/silverstripe-filterable",
+    "description": "Silverstripe module allowing creation of custom filters through the admin interface and then assigning to an object.",
     "type": "silverstripe-module",
     "homepage": "http://github.com/i-lateral/silverstripe-filterable",
-    "keywords": ["silverstripe", "dataobject", "filter"],
+    "keywords": [
+        "silverstripe",
+        "dataobject",
+        "filter"
+    ],
     "license": "BSD-3-Clause",
     "authors": [
         {
