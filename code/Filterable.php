@@ -12,7 +12,7 @@
  * @author i-lateral (http://www.i-lateral.com)
  * @package Filterable
  */
-class Filterable extends Object implements PermissionProvider
+class Filterable extends SS_Object implements PermissionProvider
 {
 
     /**
